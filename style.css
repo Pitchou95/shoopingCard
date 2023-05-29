@@ -1,0 +1,26 @@
+img {
+    height: 80px;
+    width: 80px;
+    border: 1px solid gray;
+    border-radius: 10%;
+}
+.products{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    background-color: rgb(214, 127, 195);
+    margin: 18px;
+    padding: 5px;
+    box-shadow: 5px 5px 13px red;
+}
+input{
+height: 20px;
+width: 20px;
+}
+.name{
+    font-weight: bold;
+}
+.price{
+font-style: italic;
+color: blue;
+}
