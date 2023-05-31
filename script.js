@@ -1,61 +1,56 @@
-// Initialize cart object
-const cart = [];
+const hearts = document.querySelectorAll('i.fa-regular')
 
-// Find all "Add to Cart" buttons
-const addToCartButtons = document.querySelectorAll('.add-to-cart');
+hearts.forEach((heart) => {
+    heart.addEventListener('click', function (e) {
+        e.target.classList.toggle('fa-regular')
+        e.target.classList.toggle('fa-solid')
+    })
+})
 
-// Add click event listener to each button
-addToCartButtons.forEach(button => {
-    button.addEventListener('click', addToCart);
-});
 
-// Function to handle adding a product to the cart
-function addToCart(event) {
-    const button = event.target;
-    const productId = button.getAttribute('data-product-id');
-    const input = document.getElementById(`nb${productId}`);
-    const quantity = parseInt(input.value, 10);
-
-    // Create product object
-    const product = {
-        id: productId,
-        quantity: quantity
-    };
-
-    // Check if the product is already in the cart
-    const existingProduct = cart.find(item => item.id === productId);
-    if (existingProduct) {
-        existingProduct.quantity += quantity;
-    } else {
-        cart.push(product);
+const cart = [
+    {
+        id: 1,
+        name: "produit1",
+        price: 20,
+        qte: 0
+    },
+    {
+        id: 2,
+        name: "produit2",
+        price: 25,
+        qte: 0
+    },
+    {
+        id: 3,
+        name: "produit3",
+        price: 15,
+        qte: 0
     }
+]
 
-    // Calculate and display the total quantity and price
-    const totalQuantity = calculateTotalQuantity();
-    const totalPrice = calculateTotalPrice();
-    console.log(`Total quantity: ${totalQuantity}`);
-    console.log(`Total price: $${totalPrice}`);
-}
 
-// Function to calculate the total quantity of products in the cart
-function calculateTotalQuantity() {
-    let totalQuantity = 0;
+function calculerTotal() {
+    let total = 0;
     for (let i = 0; i < cart.length; i++) {
-        totalQuantity += cart[i].quantity;
+        total += cart[i].qte * cart[i].price
     }
-    return totalQuantity;
+    return total;
 }
 
-// Function to calculate the total price of the products in the cart
-function calculateTotalPrice() {
-    let totalPrice = 0;
-    for (let i = 0; i < cart.length; i++) {
-        const productId = cart[i].id;
-        const input = document.getElementById(`nb${productId}`);
-        // console.log(input.previousElementSibling)
-        const price = parseInt(input.previousElementSibling.textContent, 10);
-        totalPrice += price * cart[i].quantity;
-    }
-    return totalPrice;
-    
-}
+const inputs = document.querySelectorAll('input')
+inputs.forEach((input) => {
+    input.addEventListener("change", function (e) {
+        //  console.log(e.target.parentNode.id)
+        const value = e.target.value
+        const idClicked = e.target.parentNode.getAttribute('id');
+        // console.log(idClicked)
+        for (let i = 0; i < 3; i++) {
+            if (cart[i].id == idClicked) {
+                cart[i].qte = value
+            }
+        }
+        document.querySelector('#total').textContent = calculerTotal()
+
+    })
+})
